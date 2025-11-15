@@ -32,15 +32,11 @@ const Menu = () => {
     icon,
     title,
     onPress,
-    adminOnly,
   }: {
     icon: keyof typeof Ionicons.glyphMap;
     title: string;
     onPress: () => void;
-    adminOnly?: boolean;
   }) => {
-    if (adminOnly && !isAdmin) return null;
-
     return (
       <TouchableOpacity
         onPress={onPress}
@@ -52,11 +48,6 @@ const Menu = () => {
         <Text className="flex-1 ml-4 text-base font-medium text-gray-800">
           {title}
         </Text>
-        {adminOnly && (
-          <View className="bg-purple-100 px-2 py-1 rounded mr-2">
-            <Text className="text-xs font-semibold text-purple-600">ADMIN</Text>
-          </View>
-        )}
         <Ionicons name="chevron-forward" size={20} color="#C7C7CC" />
       </TouchableOpacity>
     );
@@ -126,19 +117,16 @@ const Menu = () => {
               icon="time-outline"
               title="Shift History"
               onPress={() => handlePress("Shift History")}
-              adminOnly
             />
             <MenuItem
               icon="grid-outline"
               title="Service Lists"
               onPress={() => handlePress("Service Lists")}
-              adminOnly
             />
             <MenuItem
               icon="people-outline"
               title="User Accounts"
               onPress={() => handlePress("User Accounts")}
-              adminOnly
             />
           </View>
         </View>
