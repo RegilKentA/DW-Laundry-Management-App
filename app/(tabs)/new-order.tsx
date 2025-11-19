@@ -26,8 +26,7 @@ const NewOrder = () => {
   } = useNewOrderManager();
 
   const handleClearOrder = () => {
-    confirmClearServices();
-    setSelectedCustomer(null);
+    confirmClearServices(() => setSelectedCustomer(null));
   };
 
   const handleCheckout = () => {

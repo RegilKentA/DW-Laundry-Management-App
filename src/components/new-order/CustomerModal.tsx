@@ -27,8 +27,16 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
       animationType="slide"
       onRequestClose={onClose}
     >
-      <View className="flex-1 justify-end bg-black/50">
-        <View className="bg-white rounded-t-3xl max-h-[70%]">
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={onClose}
+        className="flex-1 justify-end bg-black/50"
+      >
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={(e) => e.stopPropagation()}
+          className="bg-white rounded-t-3xl max-h-[70%]"
+        >
           <View className="flex-row items-center justify-between p-6 border-b border-gray-200">
             <Text className="text-xl font-bold text-gray-800">
               Select Customer
@@ -91,8 +99,8 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
               );
             })}
           </ScrollView>
-        </View>
-      </View>
+        </TouchableOpacity>
+      </TouchableOpacity>
     </Modal>
   );
 };

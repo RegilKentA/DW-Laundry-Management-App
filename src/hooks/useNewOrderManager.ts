@@ -35,20 +35,26 @@ export const useNewOrderManager = () => {
     setSelectedServices([]);
   }, []);
 
-  const confirmClearServices = useCallback(() => {
-    Alert.alert(
-      "Clear Order",
-      "Are you sure you want to clear the current order?",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Clear",
-          style: "destructive",
-          onPress: clearServices,
-        },
-      ]
-    );
-  }, [clearServices]);
+  const confirmClearServices = useCallback(
+    (onConfirm?: () => void) => {
+      Alert.alert(
+        "Clear Order",
+        "Are you sure you want to clear the current order?",
+        [
+          { text: "Cancel", style: "cancel" },
+          {
+            text: "Clear",
+            style: "destructive",
+            onPress: () => {
+              clearServices();
+              onConfirm?.(); // ✅ Call additional cleanup if provided
+            },
+          },
+        ]
+      );
+    },
+    [clearServices]
+  );
 
   const totalAmount = useMemo(
     () => selectedServices.reduce((sum, s) => sum + s.price * s.quantity, 0),
