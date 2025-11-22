@@ -47,7 +47,7 @@ export const useNewOrderManager = () => {
             style: "destructive",
             onPress: () => {
               clearServices();
-              onConfirm?.(); // ✅ Call additional cleanup if provided
+              onConfirm?.();
             },
           },
         ]

@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import type { PaymentStatus, PaymentMethod } from "@/src/types/checkout.types";
 
 export const useCheckout = (totalAmount: number) => {
@@ -24,6 +24,18 @@ export const useCheckout = (totalAmount: number) => {
       (amount, index, self) => self.indexOf(amount) === index
     );
   }, [totalAmount]);
+
+  // Auto-set exact amount for GCash
+  useEffect(() => {
+    if (paymentMethod === "gcash") {
+      setSelectedQuickAmount(totalAmount);
+      setCustomAmount("");
+    } else {
+      // Reset when switching back to cash
+      setSelectedQuickAmount(null);
+      setCustomAmount("");
+    }
+  }, [paymentMethod, totalAmount]);
 
   // Calculate amount paid and change
   const amountPaid = selectedQuickAmount || parseFloat(customAmount) || 0;

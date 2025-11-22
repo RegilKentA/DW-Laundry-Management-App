@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { View, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useRouter, useLocalSearchParams, Stack } from "expo-router";
 import { CheckoutHeader } from "@/src/components/checkout/CheckoutHeader";
 import { PaymentStatusSelector } from "@/src/components/checkout/PaymentStatusSelector";
 import { PaymentMethodSelector } from "@/src/components/checkout/PaymentMethodSelector";
@@ -70,58 +70,62 @@ const Checkout = () => {
   }
 
   return (
-    <View className="flex-1 bg-gray-50">
-      <CheckoutHeader
-        totalAmount={checkoutData.totalAmount}
-        customerName={checkoutData.customer.name}
-        change={paymentStatus === "paid" && amountPaid > 0 ? change : null}
-        services={checkoutData.services}
-        onBack={() => router.back()}
-      />
+    <>
+      <Stack.Screen options={{ headerShown: false }} />
 
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-        <PaymentStatusSelector
-          selectedStatus={paymentStatus}
-          onSelect={setPaymentStatus}
+      <View className="flex-1 bg-gray-50">
+        <CheckoutHeader
+          totalAmount={checkoutData.totalAmount}
+          customerName={checkoutData.customer.name}
+          change={paymentStatus === "paid" && amountPaid > 0 ? change : null}
+          services={checkoutData.services}
+          onBack={() => router.back()}
         />
 
-        {paymentStatus === "paid" && (
-          <>
-            <PaymentMethodSelector
-              selectedMethod={paymentMethod}
-              onSelect={setPaymentMethod}
-            />
+        <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+          <PaymentStatusSelector
+            selectedStatus={paymentStatus}
+            onSelect={setPaymentStatus}
+          />
 
-            {paymentMethod === "cash" && (
-              <>
-                <QuickAmountGrid
-                  amounts={quickAmounts}
-                  selectedAmount={selectedQuickAmount}
-                  totalAmount={checkoutData.totalAmount}
-                  onSelect={handleQuickAmountSelect}
-                />
+          {paymentStatus === "paid" && (
+            <>
+              <PaymentMethodSelector
+                selectedMethod={paymentMethod}
+                onSelect={setPaymentMethod}
+              />
 
-                <CustomAmountInput
-                  value={customAmount}
-                  onChange={handleCustomAmountChange}
-                />
-              </>
-            )}
-          </>
-        )}
-      </ScrollView>
+              {paymentMethod === "cash" && (
+                <>
+                  <QuickAmountGrid
+                    amounts={quickAmounts}
+                    selectedAmount={selectedQuickAmount}
+                    totalAmount={checkoutData.totalAmount}
+                    onSelect={handleQuickAmountSelect}
+                  />
 
-      <View className="px-4 pb-6 pt-4 bg-white border-t border-gray-200">
-        <TouchableOpacity
-          onPress={handlePlaceOrder}
-          className="bg-blue-500 rounded-2xl py-4 active:bg-blue-600"
-        >
-          <Text className="text-white text-center text-lg font-bold">
-            Place Order
-          </Text>
-        </TouchableOpacity>
+                  <CustomAmountInput
+                    value={customAmount}
+                    onChange={handleCustomAmountChange}
+                  />
+                </>
+              )}
+            </>
+          )}
+        </ScrollView>
+
+        <View className="px-4 pb-6 pt-4 bg-white border-t border-gray-200">
+          <TouchableOpacity
+            onPress={handlePlaceOrder}
+            className="bg-blue-500 rounded-2xl py-4 active:bg-blue-600"
+          >
+            <Text className="text-white text-center text-lg font-bold">
+              Place Order
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 

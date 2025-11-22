@@ -7,7 +7,7 @@ import { CustomerModal } from "@/src/components/new-order/CustomerModal";
 import { useNewOrderManager } from "@/src/hooks/useNewOrderManager";
 import { MOCK_CUSTOMERS, MOCK_SERVICES } from "@/src/constants/mockData";
 import { formatCurrency } from "@/src/utils/formatters";
-import { useRouter } from "expo-router";
+import { useRouter, useFocusEffect } from "expo-router";
 import type { Customer } from "@/src/types/order.types";
 
 const NewOrder = () => {
@@ -17,6 +17,7 @@ const NewOrder = () => {
     null
   );
   const [showCustomerModal, setShowCustomerModal] = useState(false);
+  const [shouldClearOnFocus, setShouldClearOnFocus] = useState(false);
 
   const {
     selectedServices,
@@ -27,6 +28,17 @@ const NewOrder = () => {
     totalAmount,
     totalItems,
   } = useNewOrderManager();
+
+  // Clear order when returning from successful checkout
+  useFocusEffect(
+    React.useCallback(() => {
+      if (shouldClearOnFocus) {
+        clearServices();
+        setSelectedCustomer(null);
+        setShouldClearOnFocus(false);
+      }
+    }, [shouldClearOnFocus, clearServices])
+  );
 
   const handleClearOrder = () => {
     confirmClearServices(() => setSelectedCustomer(null));
@@ -48,6 +60,9 @@ const NewOrder = () => {
       services: selectedServices,
       totalAmount: totalAmount,
     };
+
+    // Set flag to clear order when returning
+    setShouldClearOnFocus(true);
 
     // Navigate to checkout page
     router.push({
