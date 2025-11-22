@@ -7,9 +7,12 @@ import { CustomerModal } from "@/src/components/new-order/CustomerModal";
 import { useNewOrderManager } from "@/src/hooks/useNewOrderManager";
 import { MOCK_CUSTOMERS, MOCK_SERVICES } from "@/src/constants/mockData";
 import { formatCurrency } from "@/src/utils/formatters";
+import { useRouter } from "expo-router";
 import type { Customer } from "@/src/types/order.types";
 
 const NewOrder = () => {
+  const router = useRouter();
+
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(
     null
   );
@@ -39,16 +42,20 @@ const NewOrder = () => {
       return;
     }
 
-    Alert.alert(
-      "Success",
-      `Order created for ${selectedCustomer.name}\nTotal: ${formatCurrency(
-        totalAmount
-      )}`
-    );
+    // Prepare checkout data
+    const checkoutData = {
+      customer: selectedCustomer,
+      services: selectedServices,
+      totalAmount: totalAmount,
+    };
 
-    // Reset order after successful checkout
-    clearServices();
-    setSelectedCustomer(null);
+    // Navigate to checkout page
+    router.push({
+      pathname: "/checkout/checkout",
+      params: {
+        data: JSON.stringify(checkoutData),
+      },
+    });
   };
 
   return (
