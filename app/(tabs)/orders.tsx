@@ -21,11 +21,13 @@ const Orders = () => {
   ];
 
   const handleOrderPress = (order: Order) => {
-    // Navigate to order detail page
-    // router.push({
-    //   pathname: "/order-detail",
-    //   params: { orderId: order.id },
-    // });
+    // Navigate to order detail page - pass order data directly
+    router.push({
+      pathname: "/screens/order-detail",
+      params: {
+        orderData: JSON.stringify(order),
+      },
+    } as any);
   };
 
   const dateKeys = Object.keys(groupedOrders);
