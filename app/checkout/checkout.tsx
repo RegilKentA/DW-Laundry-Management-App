@@ -48,6 +48,10 @@ const Checkout = () => {
       paymentMethod: paymentStatus === "paid" ? paymentMethod : null,
       amountPaid: paymentStatus === "paid" ? amountPaid : 0,
       change: paymentStatus === "paid" ? change : 0,
+      cashier: {
+        // id: currentUser.id,
+        // name: currentUser.name,
+      },
       createdAt: new Date().toISOString(),
     };
 

@@ -15,8 +15,8 @@ export const OrderDetailHeader: React.FC<OrderDetailHeaderProps> = ({
   onBack,
 }) => {
   return (
-    <View className="bg-blue-500 pt-16 pb-6 px-6">
-      <View className="flex-row items-center mb-4">
+    <View className="bg-blue-500 pt-10 pb-4 px-6">
+      <View className="flex-row items-center mb-2">
         <TouchableOpacity onPress={onBack} className="mr-4">
           <Ionicons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
@@ -26,7 +26,7 @@ export const OrderDetailHeader: React.FC<OrderDetailHeaderProps> = ({
       </View>
 
       <View className="bg-white/20 rounded-2xl p-4">
-        <Text className="text-white text-3xl font-bold mb-2">
+        <Text className="text-white text-2xl font-bold mb-2">
           {order.orderNumber}
         </Text>
         <View className="flex-row gap-2">

@@ -26,6 +26,7 @@ const MOCK_ORDER: Order = {
   amountPaid: 0,
   change: 0,
   status: "not_picked_up",
+  cashier: { id: 1, name: "Maria Santos" },
   createdAt: new Date().toISOString(),
 };
 
@@ -48,6 +49,7 @@ const OrderDetail = () => {
           <CustomerInfoCard
             customer={order.customer}
             createdAt={order.createdAt}
+            cashier={order.cashier}
           />
 
           <ServicesCard

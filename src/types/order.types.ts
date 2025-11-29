@@ -46,6 +46,10 @@ export interface Order {
   amountPaid: number;
   change: number;
   status: OrderStatus;
+  cashier?: {
+    id: number;
+    name: string;
+  };
   createdAt: string;
   updatedAt?: string;
 }

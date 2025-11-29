@@ -22,6 +22,7 @@ const MOCK_ORDERS: Order[] = [
     amountPaid: 50,
     change: 10,
     status: "completed",
+    cashier: { id: 1, name: "Maria Santos" },
     createdAt: new Date().toISOString(),
   },
   {
@@ -35,6 +36,7 @@ const MOCK_ORDERS: Order[] = [
     amountPaid: 0,
     change: 0,
     status: "not_picked_up",
+    cashier: { id: 2, name: "Juan Dela Cruz" },
     createdAt: new Date(Date.now() - 86400000).toISOString(), // Yesterday
   },
   {
@@ -51,6 +53,7 @@ const MOCK_ORDERS: Order[] = [
     amountPaid: 80,
     change: 0,
     status: "picked_up",
+    cashier: { id: 1, name: "Maria Santos" },
     createdAt: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
   },
 ];
