@@ -27,6 +27,14 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order, onPress }) => {
           <Text className="text-gray-500 text-xs">
             {formatTime(order.createdAt)}
           </Text>
+          {order.cashier && (
+            <View className="flex-row items-center mt-1">
+              <Ionicons name="person-circle" size={14} color="#9CA3AF" />
+              <Text className="text-gray-400 text-xs ml-1">
+                {order.cashier.name}
+              </Text>
+            </View>
+          )}
         </View>
         <View className="items-end gap-2">
           <OrderStatusBadge status={order.status} />
